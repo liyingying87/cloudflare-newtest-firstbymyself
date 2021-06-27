@@ -14,6 +14,7 @@
   {{ msg }}
   2、写一个按钮触发函数调起接口
   <a href="javascript:" v-on:click="get()">GET按钮</a>
+  <a href="javascript:" v-on:click="post()">POST按钮</a>
 </div>
 </template>
 
@@ -30,9 +31,7 @@ export default {
   },
   data(){
     return{
-      title: '我去！！！',
-      msg:'',
-      apiurl: 'http://api/baidu.com/storage/?room=1'
+      msg:'不',
     }
   },
   // created() {
@@ -51,6 +50,20 @@ export default {
       // })
       this.axios.get('/user/login').then(res=>{
         console.log(res.data)
+      })
+    },
+    post:function (){
+
+      this.axios.post('/user/login',{
+        status:1,
+        data:{
+          id:3
+        },
+        msg:"失败"
+      }).then(res=>{
+        console.log(res.data)
+      }).catch(error=>{
+        console.log(error.data)
       })
     }
   }
