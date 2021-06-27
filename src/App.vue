@@ -46,7 +46,10 @@ export default {
   // }
   methods: {
     get: function() {
-      this.axios.get('/mock/login.json').then(res=>{
+      // this.axios.get('/mock/login.json').then(res=>{
+      //   console.log(res.data)
+      // })
+      this.axios.get('/user/login').then(res=>{
         console.log(res.data)
       })
     }

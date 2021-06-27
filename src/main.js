@@ -10,6 +10,12 @@ import 'vuesax/dist/vuesax.css'
 
 Vue.config.productionTip = false
 
+//main.js
+const mock=true
+if(mock){
+  require('./mock/api')
+}
+
 Vue.use(Vuesax, {})
 new Vue({
   router,
