@@ -19,7 +19,7 @@
 </template>
 
 <script>
-
+const circle = require('./circle.js');
 // import index from './components/index.vue'
 export default {
   name: 'App',
@@ -44,12 +44,14 @@ export default {
   //   //     })
   // }
   methods: {
+
     get: function() {
       // this.axios.get('/mock/login.json').then(res=>{
       //   console.log(res.data)
       // })
       this.axios.get('/user/login').then(res=>{
         console.log(res.data)
+        console.log(`The area of a circle of radius 4 is ${circle.area(4)}`);
       })
     },
     post:function (){
