@@ -16,6 +16,7 @@
     "nprogress": "^0.2.0",
     "qs": "^6.10.1",
     "vue": "^2.6.11",
+    "vue-amap": "^0.5.10",
     "vue-axios": "^3.2.4",
     "vue-router": "^3.5.1",
     "vuesax": "^4.0.1-alpha.25",
@@ -28,7 +29,7 @@
     "amfe-flexible": "^2.2.1",
     "babel-eslint": "^10.1.0",
     "babel-polyfill": "^6.26.0",
-    "eslint": "^6.7.2",
+    "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
     "mockjs": "^1.1.0",
     "node-sass": "^6.0.1",
@@ -47,7 +48,10 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",
