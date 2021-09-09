@@ -2,6 +2,7 @@
   <div id="mapTrack">
     <el-card class="box-card" shadow="never" :body-style="{ padding: '0' }">
       <el-card class="track-detail" :body-style="{ 'padding': '7px 20px' }">
+<!--        右上角的明细小方框  onselectstart="return false;"表示禁止选取-->
         <i class="el-icon-tickets" style="cursor: pointer;" :style="{ 'color': '#' + (isShowDetail ? '409eff' : '303133') }"
            @click="getTableData()" onselectstart="return false;">
           明细
@@ -56,16 +57,9 @@
       <div class="track-table" v-if="isShowDetail">
         <el-tabs v-model="activeName" @tab-click="handleClick">
           <el-tab-pane :label="'轨迹明细(' + trackTableDataBak.length + ')'" name="first">
-            <el-table
-              ref="table"
-              size="small"
-              :data="trackTableData"
+            <el-table ref="table" size="small" :data="trackTableData"
               :header-cell-style="{backgroundColor:'#F3F4F7', height: '25px'}"
-              :height="200"
-              border
-              v-loadmore="loadMore"
-              highlight-current-row
-              style="width: 100%">
+              :height="200" border v-loadmore="loadMore" highlight-current-row style="width: 100%">
               <el-table-column type="index" width="50"></el-table-column>
               <el-table-column prop="recvtime" label="服务器时间" width="140"></el-table-column>
               <el-table-column prop="gpstime" label="卫星时间" width="140"></el-table-column>
@@ -96,12 +90,12 @@
 
   export default {
     name: 'Test_MapTrack',
-    props: {
-      vehicleNo: {
-        type: String,
-        default: ''
-      },
-    },
+    // props: {
+    //   vehicleNo: {
+    //     type: String,
+    //     default: ''
+    //   },
+    // },
     watch:{
       sliderVal(newVal) {
         if (!this.isOnSlider) {
@@ -113,12 +107,12 @@
     data() {
       return {
         activeName: 'first',
-
+        vehicleNo:'',//车的id
         startTime: '',
         endTime: '',
-        isShowDetail: false,
+        isShowDetail: false,//没有展示详细信息
 
-        loading: false,
+        loading: false,//
         initSimplifier: false,
         // 信息窗体
         infoWindow: null,
@@ -208,19 +202,19 @@
             return time.getTime() > Date.now()
           },
           shortcuts: [{
-            text: '今天',
+            text: '此时此刻',
             onClick(picker) {
               picker.$emit('pick', new Date())
             }
           }, {
-            text: '昨天',
+            text: '昨天此时此刻',
             onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() - 3600 * 1000 * 24)
               picker.$emit('pick', date)
             }
           }, {
-            text: '一周前',
+            text: '一周前的此时此刻',
             onClick(picker) {
               const date = new Date()
               date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
@@ -244,33 +238,41 @@
       el.addEventListener("mousedown", that.openSlider,false);
       // 此处用document是因为，滑动较为随意时，mouseup可能不是作用在el上
       document.addEventListener("mouseup",that.closeSlider,false);
-      console.log("111");
+      // console.log("111");
       lazyAMapApiLoaderInstance.load().then(() => {
         // 初始化地图
         this.initMap()
-        console.log("111");
+        // console.log("111");
         // 初始化点位
         this.initMarker()
-        console.log("111");
+        // console.log("111");
         // 初始化信息窗体
         this.initInfoWindow();
         this.vehicleNo = '1';
-        console.log("111");
+        // console.log("111");
       })
     },
     methods: {
       handleClick(tab, event) {
         console.log(tab, event);
       },
-      getTableData(isTimeChange) {
+
+      getTableData(isTimeChange) {   //点击明细运行的函数，如果没有选择时间，就是空参数
+        console.log(!isTimeChange);//如果没有选择时间，就是空参数 为true
         this.pageNo = 1
         this.trackTableData = []
         if (!isTimeChange) {
           this.isShowDetail = !this.isShowDetail;
-        } else{
-          if (this.$refs.table) { this.$refs.table.bodyWrapper.scrollTop = 0 }
+          console.log(this.isShowDetail);
+          console.log(this.$refs.table);//undefined
         }
-        if (this.startTime && this.endTime && this.vehicleNo) {
+        else{//有表格信息展示，就滚动到第一行：
+          console.log(this.$refs.table);//
+          if (this.$refs.table) {
+            this.$refs.table.bodyWrapper.scrollTop = 0//就滚动到第一行：
+          }
+        }
+        if (this.startTime && this.endTime && this.vehicleNo) {//三者都有就执行
           this.loading = true
           let uri = '?startTime=' + this.startTime +
             '&endTime=' + this.endTime +
@@ -280,14 +282,15 @@
           this.trackTableDataBak = MapTrackTableData.mapTrackTableData()
           console.log("trackTableDataBak",this.trackTableDataBak);
           if (this.trackTableDataBak.length > 0) {
-            this.trackTableData = this.trackTableDataBak.slice(this.pageNo - 1, this.pageSize + this.pageNo - 1);
-            this.pageNo++
+            this.trackTableData = this.trackTableDataBak.slice(this.pageNo - 1, this.pageSize + this.pageNo - 1);//this.pageNo=1,起始时候=1，前十个
+            console.log("trackTableData",this.trackTableData);
+            console.log("this.pageNo:",this.pageNo,"this.pageSize:",this.pageSize);
+            this.pageNo++;
             this.aq = true
           }
         }
       },
-      loadMore() {
-        console.log(this.loadSign)
+      loadMore() {//懒加载
         if(this.aq === false){
           return
         }
@@ -304,6 +307,7 @@
               this.aq = false
             }
       },
+
       // 时间改变
       timeChangeHandle() {
         if (this.startTime && this.endTime) {
@@ -321,7 +325,6 @@
           }
 
           that.initSimplifier = true
-          console.log(that.initSimplifier);
           that.signMarker.setLabel({})
           let startTime = this.timeValue + ' 00:00:00';
           let endTime = this.timeValue + ' 23:59:59';
@@ -334,14 +337,14 @@
                 that.pathSimplifierIns.setData([]);
               }
               // TODO
-              let data = MapTrackData.mapTrackData()
+              let data = MapTrackData.mapTrackData()//每次都是这个轨迹
               console.log(data);
               let linArray = data.result.lineArray
               let pointDataList = data.result.pointDataList
               // 初始化坐标点
               if (linArray.length > 0) {
                 that.signMarker.show()
-                that.signMarker.setPosition(linArray[0])
+                that.signMarker.setPosition(linArray[0])//起点的标注
 
                 that.actualList = linArray
 
@@ -416,7 +419,7 @@
                 that.navgtr.on('move', function(data, position) {
                   that.isCursorAtPathEnd = false
                   let idx = position.dataItem.pointIndex //走到了第几个点
-                  let tail = position.tail //至下一个节点的比例位置
+                  let tail = position.tail //至下一个节点的比例位置  用来控制进度条
                   let totalIdx = idx + tail
                   let len = position.dataItem.pathData.path.length
                   // 设置当前点位
@@ -439,7 +442,7 @@
                   // let point = trackList[idx]
                   if (idx < len - 1) {
                     // that.navgtr.setSpeed(that.navgtr._realSpeed * that.times);
-                    that.navgtr.setSpeed(that.navgtrSpeed * that.times)
+                    that.navgtr.setSpeed(that.navgtrSpeed * that.times)//设置速度
                   }
                   // 进度条实时展示tail
                   !that.isOnSlider && (that.sliderVal = (totalIdx / len) * 100)
@@ -559,14 +562,10 @@
       // 查询当天车辆数据采集时间
       queryTimes(pageChange) {
         if (this.startTime && this.endTime && this.vehicleNo) {
-          this.getTableData(true)
-          /*getAction('/emission/noPage/list' + uri).then(resp => {
-            if (resp.success) {
-              this.trackData = resp.result
-            }
-          })*/
+          this.getTableData(true)//三者都有，选择了时间
           if (!pageChange) {
-            if(this.infoWindow) this.infoWindow.close()
+            if(this.infoWindow)
+              this.infoWindow.close()
             this.initPlayBox()
             this.beforeInit = true
             // 初始化巡航组件
@@ -612,7 +611,7 @@
           center: this.firstArr, // 地图中心点
           zoom: 12
         });
-        console.log("111");
+        // console.log("111");
       },
       initMarker() {
         // 引入Marker,绘制点标记
@@ -622,7 +621,7 @@
           visible: false,
           content: '<div style="text-align:center; background-color: hsla(180, 100%, 50%, 0.9); height: 10px; width: 10px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>'
         });
-        console.log("111");
+        // console.log("111");
       },
       initInfoWindow() {
         // 创建 infoWindow 实例
@@ -632,7 +631,7 @@
           offset: new AMap.Pixel(0, -20),
           content: ''  //传入 dom 对象，或者 html 字符串
         });
-        console.log("111");
+        // console.log("111");
       },
 
       /**

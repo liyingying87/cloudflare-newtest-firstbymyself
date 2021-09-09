@@ -52,6 +52,19 @@ VueAMap.initAMapApiLoader({
   uiVersion: '1.0.11' // 版本号 为了能够使用高德地图的ui
 });
 
+Vue.directive('loadmore', {
+  bind(el, binding) {
+    const selectWrap = el.querySelector('.el-table__body-wrapper')
+    selectWrap.addEventListener('scroll', function() {
+      let sign = 0
+      const scrollDistance = this.scrollHeight - this.scrollTop - this.clientHeight
+      if (scrollDistance <= sign) {
+        binding.value()
+      }
+    })
+  }
+})
+
 Vue.use(Vuesax, {})
 new Vue({
   router,
