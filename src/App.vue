@@ -1,24 +1,27 @@
 <template>
 <div>
-<!--  <index></index>-->
-  <p>
-    <!-- 使用 router-link 组件来导航. -->
-    <!-- 通过传入 `to` 属性指定链接. -->
-    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
-    <router-link to="/user/foo">Go to Foo</router-link>
-    <router-link to="/user/bar">Go to Bar</router-link>
-  </p>
-  <!-- 路由出口 -->
-  <!-- 路由匹配到的组件将渲染在这里 -->
-  <router-view></router-view>
-  {{ msg }}
-  2、写一个按钮触发函数调起接口
-  <a href="javascript:" v-on:click="get()">GET按钮</a>
-  <a href="javascript:" v-on:click="post()">POST按钮</a>
+<!--&lt;!&ndash;  <index></index>&ndash;&gt;-->
+<!--  <p>-->
+<!--    &lt;!&ndash; 使用 router-link 组件来导航. &ndash;&gt;-->
+<!--    &lt;!&ndash; 通过传入 `to` 属性指定链接. &ndash;&gt;-->
+<!--    &lt;!&ndash; <router-link> 默认会被渲染成一个 `<a>` 标签 &ndash;&gt;-->
+<!--    <router-link to="/user/foo">Go to Foo</router-link>-->
+<!--    <router-link to="/user/bar">Go to Bar</router-link>-->
+<!--  </p>-->
+<!--  &lt;!&ndash; 路由出口 &ndash;&gt;-->
+<!--  &lt;!&ndash; 路由匹配到的组件将渲染在这里 &ndash;&gt;-->
+<!--  <router-view></router-view>-->
+<!--  {{ msg }}-->
+<!--  2、写一个按钮触发函数调起接口-->
+<!--  <a href="javascript:" v-on:click="get()">GET按钮</a>-->
+<!--  <a href="javascript:" v-on:click="post()">POST按钮</a>-->
+  <Test_MapTrack></Test_MapTrack>
 </div>
 </template>
 
 <script>
+import Test_MapTrack from "@/components/Test_MapTrack";
+
 const circle = require('./circle.js');
 // import index from './components/index.vue'
 export default {
@@ -27,7 +30,7 @@ export default {
 
   },
   components: {
-
+    Test_MapTrack,
   },
   data(){
     return{

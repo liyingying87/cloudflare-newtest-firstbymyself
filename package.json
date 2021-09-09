@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "element-ui": "^2.15.2",
+    "element-ui": "^2.15.6",
     "lib-flexible": "^0.3.2",
     "mavon-editor": "^2.9.1",
     "nprogress": "^0.2.0",
@@ -31,9 +31,11 @@
     "babel-polyfill": "^6.26.0",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
+    "less": "^4.1.1",
+    "less-loader": "^6.0.0",
     "mockjs": "^1.1.0",
     "node-sass": "^6.0.1",
-    "sass-loader": "^12.1.0",
+    "sass-loader": "7.3.1",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

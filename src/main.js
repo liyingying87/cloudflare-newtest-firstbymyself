@@ -3,6 +3,10 @@ import App from './App.vue'
 import router from './router'
 import Vuesax from 'vuesax'
 import axios from 'axios';
+import VueAMap from 'vue-amap';
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+Vue.use(ElementUI)//全局使用ElementUI
 import Vuex from 'vuex'     //状态管理工具
 import store from './vuex/store'  //引入vuex的状态仓库
 import NProgress from 'nprogress'    //页面顶部加载条和样式
@@ -14,7 +18,7 @@ import directive from "./assets/util/directive";
 import VueAxios from 'vue-axios';
 //兼容ie
 import "babel-polyfill";
-import ElementUI from 'element-ui'
+
 import 'element-ui/lib/theme-chalk/index.css'
 const commonUtil = require('./assets/util/common')
 const baseConfig = require('./assets/util/baseConfig')
@@ -34,12 +38,19 @@ Vue.use(VueAxios,axios);
 Vue.use(mavonEditor)
 Vue.use(Vuex)
 Vue.config.productionTip = false
-
+Vue.use(VueAMap);
 //main.js
 const mock=true
 if(mock){
   require('./mock/api')
 }
+VueAMap.initAMapApiLoader({
+  key: '70d0e910c9b68f064145ea2c2fad7c13',
+  plugin: ['AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType','Geolocation','AMap.PathSimplifier','AMap.SimpleInfoWindow'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4',
+  uiVersion: '1.0.11' // 版本号 为了能够使用高德地图的ui
+});
 
 Vue.use(Vuesax, {})
 new Vue({
