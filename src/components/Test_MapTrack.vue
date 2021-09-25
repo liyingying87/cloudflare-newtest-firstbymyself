@@ -339,7 +339,7 @@
               // TODO
               let data = MapTrackData.mapTrackData()//每次都是这个轨迹
               console.log(data);
-              let linArray = data.result.lineArray
+              let linArray = data.result.lineArray  //行驶的路线
               let pointDataList = data.result.pointDataList
               // 初始化坐标点
               if (linArray.length > 0) {
@@ -417,8 +417,23 @@
                   that.navgtr._movedDist = this.getMovedDistance() - that.navgtr._startDist
                 })
                 that.navgtr.on('move', function(data, position) {
+                  // //120.193286,32.137502 走到这里弹出对话框
+                  // console.log(that.navgtr.getPosition().lng , ' ' ,that.navgtr.getPosition().lat);
+                  // if(that.navgtr.getPosition().lng == 120.193286 && that.navgtr.getPosition().lat == 32.137502){
+                  //   that.$alert('终点站', '标题名称', {
+                  //     confirmButtonText: '确定',
+                  //     callback: action => {
+                  //       this.$message({
+                  //         type: 'info',
+                  //         message: `action: ${ action }`
+                  //       });
+                  //     }
+                  //   });
+                  //   console.log("daole");
+                  // }
                   that.isCursorAtPathEnd = false
                   let idx = position.dataItem.pointIndex //走到了第几个点
+                  console.log(idx);
                   let tail = position.tail //至下一个节点的比例位置  用来控制进度条
                   let totalIdx = idx + tail
                   let len = position.dataItem.pathData.path.length

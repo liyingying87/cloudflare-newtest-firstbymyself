@@ -1,21 +1,23 @@
 <template>
 <div>
-<!--&lt;!&ndash;  <index></index>&ndash;&gt;-->
-<!--  <p>-->
-<!--    &lt;!&ndash; 使用 router-link 组件来导航. &ndash;&gt;-->
-<!--    &lt;!&ndash; 通过传入 `to` 属性指定链接. &ndash;&gt;-->
-<!--    &lt;!&ndash; <router-link> 默认会被渲染成一个 `<a>` 标签 &ndash;&gt;-->
-<!--    <router-link to="/user/foo">Go to Foo</router-link>-->
-<!--    <router-link to="/user/bar">Go to Bar</router-link>-->
-<!--  </p>-->
-<!--  &lt;!&ndash; 路由出口 &ndash;&gt;-->
-<!--  &lt;!&ndash; 路由匹配到的组件将渲染在这里 &ndash;&gt;-->
-<!--  <router-view></router-view>-->
-<!--  {{ msg }}-->
-<!--  2、写一个按钮触发函数调起接口-->
-<!--  <a href="javascript:" v-on:click="get()">GET按钮</a>-->
-<!--  <a href="javascript:" v-on:click="post()">POST按钮</a>-->
-  <Test_MapTrack></Test_MapTrack>
+  <div>User {{ $route.params }}</div>
+<!--  <index></index>-->
+  <p>
+    <!-- 使用 router-link 组件来导航. -->
+    <!-- 通过传入 `to` 属性指定链接. -->
+    <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+
+    <router-link to="/user/foo">Go to Foo</router-link>
+    <router-link to="/user/bar">Go to Bar</router-link>
+  </p>
+  <!-- 路由出口 -->
+  <!-- 路由匹配到的组件将渲染在这里 -->
+  <router-view></router-view>
+  {{ msg }}
+  写一个按钮触发函数调起接口
+  <a href="javascript:" v-on:click="get()">GET按钮</a>
+  <a href="javascript:" v-on:click="post()">POST按钮</a>
+<!--  <Test_MapTrack></Test_MapTrack>-->
 </div>
 </template>
 
@@ -34,7 +36,7 @@ export default {
   },
   data(){
     return{
-      msg:'不',
+      msg:'这是一个msg消息',
     }
   },
   // created() {
@@ -47,7 +49,6 @@ export default {
   //   //     })
   // }
   methods: {
-
     get: function() {
       // this.axios.get('/mock/login.json').then(res=>{
       //   console.log(res.data)
@@ -58,7 +59,6 @@ export default {
       })
     },
     post:function (){
-
       this.axios.post('/user/login',{
         status:1,
         data:{
