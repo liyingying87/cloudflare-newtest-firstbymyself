@@ -16,6 +16,7 @@ import 'lib-flexible/flexible'
 //lib-flexible插件,移动端适配解决方案。https://github.com/amfe/article/issues/17
 import directive from "./assets/util/directive";
 import VueAxios from 'vue-axios';
+import "@/assets/scss/main.scss"
 //兼容ie
 import "babel-polyfill";
 

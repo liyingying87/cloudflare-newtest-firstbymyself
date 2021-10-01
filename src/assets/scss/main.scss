@@ -1,0 +1,45 @@
+//$primary-color:#1269b5;
+//$primary-border:1px solid $primary-color;
+//div.box{
+//  background-color: $primary-color;
+//}
+//h1.page-header{
+//  border:$primary-border;
+//}
+//单行注释不显示
+/* 多行注释
+ * 会包含在没有压缩之后的CSS里面*/
+@import "base";
+
+.box {
+height: 100px;
+  .header{
+    margin: 0;
+  }
+    .big-main{
+      float: left;
+      list-style: none;
+      padding:5px;
+    }
+    & &-text{
+      background-color: #ffe099;
+    }
+
+}
+@mixin alert($text-color,$background-color){
+  color:$text-color;
+  background-color: $background-color;
+  a{
+    //加深指定颜色
+    color: darken($text-color,10%);
+  }
+}
+.alert-warning{
+  @include alert(#8a6b3b,#fcf8e3);
+}
+.alert-info{
+  @include alert($background-color:#cf8e3d,
+  $text-color:#31708f
+  );
+}
+
