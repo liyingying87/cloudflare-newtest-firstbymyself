@@ -1,45 +1,18 @@
-//$primary-color:#1269b5;
-//$primary-border:1px solid $primary-color;
-//div.box{
-//  background-color: $primary-color;
-//}
-//h1.page-header{
-//  border:$primary-border;
-//}
-//单行注释不显示
-/* 多行注释
- * 会包含在没有压缩之后的CSS里面*/
-@import "base";
-
-.box {
-height: 100px;
-  .header{
-    margin: 0;
+$i: 6;
+@while $i > 0 {
+  .item-#{$i}{
+    width: 5px * $i;
   }
-    .big-main{
-      float: left;
-      list-style: none;
-      padding:5px;
-    }
-    & &-text{
-      background-color: #ffe099;
-    }
-
+  $i:$i - 2;
 }
-@mixin alert($text-color,$background-color){
-  color:$text-color;
-  background-color: $background-color;
-  a{
-    //加深指定颜色
-    color: darken($text-color,10%);
+$colors:(light:#ffff,dark:#0000);
+@function color($key){
+  @if not map-has-key($colors,$key){
+    @warn "在$colors 里面没有找到#{$key} 这个key"
   }
+  @return map-get($colors,$key);
 }
-.alert-warning{
-  @include alert(#8a6b3b,#fcf8e3);
+body{
+  background-color: color(dark);
+  color:color(gray);
 }
-.alert-info{
-  @include alert($background-color:#cf8e3d,
-  $text-color:#31708f
-  );
-}
-
